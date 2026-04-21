@@ -35,6 +35,28 @@ public class ExplorerSearch {
         return -1;
     }
 
+    private static int reachableArea(int[] curLocation, int[][] island, int[][] visited) {
+        int row = curLocation[0];
+        int col = curLocation[1];
+
+
+        //Explorer Game conditions
+        if (row < 0 || row >= island.length || col < 0 || col >= island[0].length) return 0;
+        if (visited[row][col] == 1) return 0;
+        if (island[row][col] == 2) return 0;
+        if (island[row][col] == 3) return 0;
+
+
+        // Add one to visited to denote that the explore has encountered a 1 tile
+        visited[row][col] = 1;
+        // Set the number of locations to one. Recursive calls will increment this value
+        int numberOfLocations = 1;
+        for (int[] move : possibleMoves(island, curLocation)) {
+            numberOfLocations += reachableArea(move, island, visited);
+            }
+            return numberOfLocations;
+        }
+
     private static int[] explorerLocation(int[][] island) {
         for (int row = 0; row < island.length; row++) {
             for (int col = 0; col < island[0].length; col++) {
