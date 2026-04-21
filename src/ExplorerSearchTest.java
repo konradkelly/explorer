@@ -3,20 +3,17 @@ import org.junit.Test;
 
 public class ExplorerSearchTest {
 
-
     @Test
     public void testSingleCell() {
         int[][] island = {{0}};
         assertEquals(1, ExplorerSearch.reachableArea(island));
     }
 
-
     @Test
     public void testSingleRow() {
         int[][] island = {{1, 1, 0, 1, 1}};
         assertEquals(5, ExplorerSearch.reachableArea(island));
     }
-
 
     @Test
     public void testSingleColumn() {
@@ -30,7 +27,6 @@ public class ExplorerSearchTest {
         assertEquals(5, ExplorerSearch.reachableArea(island));
     }
 
-
     @Test
     public void testExplorerOnEdge() {
         int[][] island = {
@@ -39,7 +35,6 @@ public class ExplorerSearchTest {
         };
         assertEquals(6, ExplorerSearch.reachableArea(island));
     }
-
 
     @Test
     public void testFullyOpen() {
@@ -60,7 +55,6 @@ public class ExplorerSearchTest {
         };
         assertEquals(1, ExplorerSearch.reachableArea(island));
     }
-
 
     @Test
     public void testIslandDividedByWater() {
@@ -86,7 +80,6 @@ public class ExplorerSearchTest {
         assertEquals(10, ExplorerSearch.reachableArea(island));
     }
 
-
     @Test
     public void testIslandDividedByMountainAndWater() {
         int[][] island = {
@@ -99,7 +92,6 @@ public class ExplorerSearchTest {
         assertEquals(10, ExplorerSearch.reachableArea(island));
     }
 
-
     @Test
     public void testReachableArea_someUnreachable() {
         int[][] island = {
@@ -111,5 +103,45 @@ public class ExplorerSearchTest {
         };
         int actual = ExplorerSearch.reachableArea(island);
         assertEquals(14, actual);
+    }
+    
+    @Test
+    public void testNoExplorerThrowsException() {
+        int[][] island = {
+            {1, 1, 1},
+            {1, 1, 1},
+        };
+        assertThrows(IllegalArgumentException.class, () -> ExplorerSearch.reachableArea(island));
+    }    
+
+    @Test
+    public void testInvalidTilesThrowsException() {
+        int[][] island = {
+            {-1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1},
+            {-1, -1, -1, -1, -1},
+        };
+        assertThrows(IllegalArgumentException.class, () -> ExplorerSearch.reachableArea(island));
+    }  
+   
+    @Test
+    public void testTwoZigzagRivers() {
+        int[][] island = {
+            {0, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1},
+            {1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1},
+            {1, 1, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1},
+            {1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1},
+            {1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1},
+            {1, 1, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1},
+            {1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1},
+            {1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1},
+            {1, 1, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1},
+            {1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1},
+            {1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1},
+            {1, 1, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1},
+        };
+        assertEquals(40, ExplorerSearch.reachableArea(island));
     }
 }
